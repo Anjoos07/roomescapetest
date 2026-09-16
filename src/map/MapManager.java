@@ -7,31 +7,37 @@ import java.util.Map;
 public class MapManager {
 
     private final Map<String, TileMap> maps = new LinkedHashMap<>();
+
     private String currentMapName;
 
     public MapManager() {
 
         loadMap(
             "bedroom",
-            "src/map/Bedroom.tmx"
+            "src/map/Bedroom(3).tmx"
         );
 
         loadMap(
             "kitchen",
-            "src/map/Kitchen.tmx"
+            "src/map/Kitchen(3).tmx"
         );
 
         loadMap(
             "living_room",
-            "src/map/LivingRoom.tmx"
+            "src/map/Living_room.tmx"
         );
 
         loadMap(
             "study",
-            "src/map/Study.tmx"
+            "src/map/untitled(3).tmx"
         );
 
+        // Start in living room
         currentMapName = "living_room";
+
+        System.out.println(
+            "Starting map: " + currentMapName
+        );
     }
 
     private void loadMap(
@@ -40,12 +46,20 @@ public class MapManager {
     ) {
 
         System.out.println(
+            "========================================"
+        );
+
+        System.out.println(
             "Loading map: " + name
         );
 
         TileMap map = new TileMap(path);
 
         maps.put(name, map);
+
+        System.out.println(
+            "Map loaded: " + name
+        );
     }
 
     public void switchMap(String name) {
@@ -62,8 +76,7 @@ public class MapManager {
         currentMapName = name;
 
         System.out.println(
-            "Current map: " +
-            currentMapName
+            "Switched to map: " + currentMapName
         );
     }
 
@@ -79,8 +92,7 @@ public class MapManager {
 
     public void draw(Graphics2D g2) {
 
-        TileMap currentMap =
-            getCurrentMap();
+        TileMap currentMap = getCurrentMap();
 
         if (currentMap != null) {
             currentMap.draw(g2);
