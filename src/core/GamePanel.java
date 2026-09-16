@@ -1,27 +1,28 @@
 package core;
 
-import javax.swing.JPanel;
-import java.awt.Graphics;
+import input.InputSystem;
 import java.awt.Color;
 import java.awt.Dimension;
-
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JPanel;
 import javax.swing.Timer;
-
-// import java.awt.event.ActionListener;
-
+import map.TileMap;
 import player.Player;
-import input.InputSystem;
 
 public class GamePanel extends JPanel{
 
     private Timer gameTimer;
     private Player player;
     private InputSystem inputSystem;
+    private TileMap tileMap;
 
     
     public GamePanel(){
         setPreferredSize(new Dimension(960,640));
         setBackground(Color.BLACK);
+
+        tileMap = new TileMap("src/map/Living_room.tmx");
 
         this.player = new Player(100, 100); // Player created on coord 100,100
 
@@ -36,6 +37,7 @@ public class GamePanel extends JPanel{
             repaint();
         });
         gameTimer.start();
+        
 
         
     }
@@ -58,6 +60,9 @@ public class GamePanel extends JPanel{
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
 
+        Graphics2D g2 = (Graphics2D) g;
+
+        tileMap.draw((Graphics2D) g2);
         g.setColor(player.getColor());
         g.fillRect(player.getX(), player.getY(), player.getWidth(), player.getHeight());
        
